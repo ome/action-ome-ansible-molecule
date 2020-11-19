@@ -1,0 +1,43 @@
+---
+# yamllint disable rule:line-length
+name: Test Ansible roles with Molecule
+description: Run Molecule to test Ansible roles
+author: Open Microscopy Environment
+
+branding:
+  icon: server
+  color: yellow
+
+inputs:
+  scenario:
+    description: Molecule scenario name
+    required: false
+    default: default
+  subdir:
+    description: Subdirectory to run molecule in if not the top level
+    required: false
+    default: ./
+  manage-virtualenv:
+    description: >
+      If true create virtualenv and install dependencies, otherwise user is
+      responsible for installing dependencies
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create virtualenv
+      run: |
+        if [[ "${{ inputs.manage-virtualenv }}" == "true" ]]; then
+          python3 -mvenv ~/venv
+          ~/venv/bin/pip install "ome-ansible-molecule==0.4.*"
+          echo PATH=~/venv/bin:$PATH >> $GITHUB_ENV
+          echo VIRTUAL_ENV=~/venv >> $GITHUB_ENV
+        fi
+      shell: bash
+    - name: Run molecule
+      run: |
+        cd "${{ inputs.subdir }}"
+        molecule test -s "${{ inputs.scenario }}"
+      shell: bash
