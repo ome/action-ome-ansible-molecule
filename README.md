@@ -25,10 +25,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: checkout
         uses: actions/checkout@v2
       - name: molecule
-        uses: manics/action-ome-molecule@master
+        uses: manics/action-ome-ansible-molecule@main
 ```
