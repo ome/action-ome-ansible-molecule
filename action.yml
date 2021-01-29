@@ -23,6 +23,10 @@ inputs:
       responsible for installing dependencies
     required: false
     default: "true"
+  ome-ansible-molecule-version:
+    description: The version of ome-ansible-molecule
+    required: false
+    default: "0.5.*"
 
 runs:
   using: "composite"
@@ -31,7 +35,7 @@ runs:
       run: |
         if [[ "${{ inputs.manage-virtualenv }}" == "true" ]]; then
           python3 -mvenv ~/venv
-          ~/venv/bin/pip install "ome-ansible-molecule==0.4.*"
+          ~/venv/bin/pip install "ome-ansible-molecule==${{ inputs.ome-ansible-molecule-version }}"
           echo PATH=~/venv/bin:$PATH >> $GITHUB_ENV
           echo VIRTUAL_ENV=~/venv >> $GITHUB_ENV
         fi
