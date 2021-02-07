@@ -35,6 +35,7 @@ runs:
       run: |
         if [[ "${{ inputs.manage-virtualenv }}" == "true" ]]; then
           python3 -mvenv ~/venv
+          ~/venv/bin/pip install -U pip
           ~/venv/bin/pip install "ome-ansible-molecule==${{ inputs.ome-ansible-molecule-version }}"
           echo PATH=~/venv/bin:$PATH >> $GITHUB_ENV
           echo VIRTUAL_ENV=~/venv >> $GITHUB_ENV
