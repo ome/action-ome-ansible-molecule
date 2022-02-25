@@ -26,7 +26,7 @@ inputs:
   ome-ansible-molecule-version:
     description: The version of ome-ansible-molecule
     required: false
-    default: "0.5.*"
+    default: "0.6.*"
 
 runs:
   using: "composite"
